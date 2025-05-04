@@ -29,4 +29,6 @@ jobs:
           unzip sonar-scanner.zip
           ./sonar-scanner-*/bin/sonar-scanner \
             -Dsonar.login=${SONAR_TOKEN} \
-            -Dsonar.host.url=http://TU_SERVIDOR_SONARQUBE:9000
+            -Dsonar.projectKey=mi-proyecto \
+            -Dsonar.sources=src \
+            -Dsonar.host.url=http://10.34.1.66:9000
