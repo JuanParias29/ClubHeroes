@@ -21,14 +21,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Ejecutar análisis con SonarScanner
+      - name: Ejecutar análisis con SonarQube
+        uses: SonarSource/sonarcloud-github-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-          unzip sonar-scanner.zip
-          ./sonar-scanner-*/bin/sonar-scanner \
-            -Dsonar.login=${SONAR_TOKEN} \
-            -Dsonar.projectKey=mi-proyecto \
-            -Dsonar.sources=src \
+        with:
+          args: >
+            -Dsonar.projectKey=mi-proyecto
+            -Dsonar.sources=src
             -Dsonar.host.url=http://10.34.1.66:9000
