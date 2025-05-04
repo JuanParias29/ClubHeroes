@@ -1,0 +1,32 @@
+name: Análisis con SonarQube
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  sonarQubeAnalysis:
+    name: Ejecutar análisis SonarQube
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Java
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Ejecutar análisis con SonarScanner
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          unzip sonar-scanner.zip
+          ./sonar-scanner-*/bin/sonar-scanner \
+            -Dsonar.login=${SONAR_TOKEN} \
+            -Dsonar.host.url=http://TU_SERVIDOR_SONARQUBE:9000
